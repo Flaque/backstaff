@@ -14,17 +14,20 @@ Elm.Main.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var getOffset = F2(function (scale,min) {    return min / 2 * (1 - scale);});
+   var getOffset = F2(function (scale,containerHeight) {    return A2($Debug.log,"offset",containerHeight * 2 * (1 - scale));});
    var getHeight = F2(function (max,scale) {    return max * scale;});
    var rectWidth = 10;
-   var boxWidth = 300;
-   var boxHeight = 100;
+   var boxWidth = 500;
+   var boxHeight = 400;
    var myRect = F2(function (offset,scale) {
       return A2($Graphics$Collage.move,
-      {ctor: "_Tuple2",_0: offset - boxWidth / 2 + rectWidth,_1: 0 - A2(getOffset,boxHeight,scale) - boxHeight / 2},
-      A2($Graphics$Collage.filled,$Color.black,A2($Graphics$Collage.rect,rectWidth,A2(getHeight,100,scale))));
+      {ctor: "_Tuple2",_0: offset - boxWidth / 2 + rectWidth,_1: 0 - A2(getOffset,scale,100)},
+      A2($Graphics$Collage.filled,$Color.blue,A2($Graphics$Collage.rect,rectWidth,A2(getHeight,boxHeight,scale))));
    });
-   var main = A3($Graphics$Collage.collage,boxWidth,boxHeight,_U.list([A2(myRect,0,0.1),A2(myRect,20,0.5),A2(myRect,40,0.3),A2(myRect,60,0.6)]));
+   var main = A3($Graphics$Collage.collage,
+   boxWidth,
+   boxHeight,
+   _U.list([A2(myRect,0,0.1),A2(myRect,20,0.5),A2(myRect,40,0.3),A2(myRect,60,0.6),A2(myRect,80,0.3),A2(myRect,120,1),A2(myRect,100,1.0)]));
    return _elm.Main.values = {_op: _op
                              ,boxHeight: boxHeight
                              ,boxWidth: boxWidth

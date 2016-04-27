@@ -14,26 +14,35 @@ Elm.Main.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var getOffset = F2(function (scale,containerHeight) {    return A2($Debug.log,"offset",containerHeight * 2 * (1 - scale));});
-   var getHeight = F2(function (max,scale) {    return max * scale;});
-   var rectWidth = 10;
+   var dotSize = 2;
+   var makeCircle = function (_p0) {
+      var _p1 = _p0;
+      return A2($Graphics$Collage.move,{ctor: "_Tuple2",_0: _p1._0,_1: _p1._1},A2($Graphics$Collage.filled,$Color.black,$Graphics$Collage.circle(dotSize)));
+   };
    var boxWidth = 500;
+   var yAxisPath = $Graphics$Collage.path(_U.list([{ctor: "_Tuple2",_0: 0 - boxWidth,_1: 0},{ctor: "_Tuple2",_0: boxWidth,_1: 0}]));
+   var yAxis = A2($Graphics$Collage.traced,$Graphics$Collage.dashed($Color.black),yAxisPath);
    var boxHeight = 400;
-   var myRect = F2(function (offset,scale) {
-      return A2($Graphics$Collage.move,
-      {ctor: "_Tuple2",_0: offset - boxWidth / 2 + rectWidth,_1: 0 - A2(getOffset,scale,100)},
-      A2($Graphics$Collage.filled,$Color.blue,A2($Graphics$Collage.rect,rectWidth,A2(getHeight,boxHeight,scale))));
-   });
+   var xAxisPath = $Graphics$Collage.path(_U.list([{ctor: "_Tuple2",_0: 0,_1: 0 - boxHeight},{ctor: "_Tuple2",_0: 0,_1: boxHeight}]));
+   var xAxis = A2($Graphics$Collage.traced,$Graphics$Collage.dashed($Color.black),xAxisPath);
    var main = A3($Graphics$Collage.collage,
    boxWidth,
    boxHeight,
-   _U.list([A2(myRect,0,0.1),A2(myRect,20,0.5),A2(myRect,40,0.3),A2(myRect,60,0.6),A2(myRect,80,0.3),A2(myRect,120,1),A2(myRect,100,1.0)]));
+   _U.list([xAxis
+           ,yAxis
+           ,makeCircle({ctor: "_Tuple2",_0: 1.0,_1: 20.0})
+           ,makeCircle({ctor: "_Tuple2",_0: -20.0,_1: 25.0})
+           ,makeCircle({ctor: "_Tuple2",_0: 20.0,_1: 70.0})
+           ,makeCircle({ctor: "_Tuple2",_0: 8.0,_1: -50.0})
+           ,makeCircle({ctor: "_Tuple2",_0: 50.0,_1: -80.0})]));
    return _elm.Main.values = {_op: _op
                              ,boxHeight: boxHeight
                              ,boxWidth: boxWidth
-                             ,rectWidth: rectWidth
+                             ,dotSize: dotSize
                              ,main: main
-                             ,getHeight: getHeight
-                             ,getOffset: getOffset
-                             ,myRect: myRect};
+                             ,makeCircle: makeCircle
+                             ,xAxis: xAxis
+                             ,xAxisPath: xAxisPath
+                             ,yAxis: yAxis
+                             ,yAxisPath: yAxisPath};
 };

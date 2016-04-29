@@ -8,16 +8,21 @@ boxWidth  = 500
 dotSize   = 2
 
 main : Element
-main = collage boxWidth boxHeight
-  [
-    xAxis,
-    yAxis,
-    makeCircle (1.0,   20.0),
-    makeCircle (-20.0, 25.0),
-    makeCircle (20.0,  70.0),
-    makeCircle (8.0,   -50.0),
-    makeCircle (50.0,  -80.0)
-  ]
+main = collage boxWidth boxHeight forms
+
+forms = xAxis :: yAxis :: fromPoints [
+  (1.0,   20.0),
+  (-20.0, 25.0),
+  (20.0,  70.0),
+  (8.0,   -50.0),
+  (50.0,  -80.0) ]
+
+fromPoints : List (Float, Float) -> List Form
+fromPoints list =
+  case list of
+    []         -> []
+    (x, y)::[] -> [makeCircle (x, y)]
+    (x, y)::t  -> (makeCircle (x, y))::(fromPoints t)
 
 makeCircle (x, y) =
   circle dotSize

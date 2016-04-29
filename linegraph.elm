@@ -47,7 +47,6 @@ xAxisPath : Path
 xAxisPath =
   path [(0, -boxHeight), (0, boxHeight)]
 
-
 yAxis : Form
 yAxis =
   traced (dashed black) yAxisPath

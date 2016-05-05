@@ -3,45 +3,45 @@ import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
 import Debug
 
-boxHeight = 400
-boxWidth  = 500
-dotSize   = 2
+scatter_boxHeight = 400
+scatter_boxWidth  = 500
+scatter_dotSize   = 2
 
 main : Element
 main = collage boxWidth boxHeight forms
 
-forms = xAxis :: yAxis :: fromPoints [
+scatter_forms = xAxis :: yAxis :: fromPoints [
   (1.0,   20.0),
   (-20.0, 25.0),
   (20.0,  70.0),
   (8.0,   -50.0),
   (50.0,  -80.0) ]
 
-fromPoints : List (Float, Float) -> List Form
-fromPoints list =
+scatter_fromPoints : List (Float, Float) -> List Form
+scatter_fromPoints list =
   case list of
     []         -> []
-    (x, y)::[] -> [makeCircle (x, y)]
-    (x, y)::t  -> (makeCircle (x, y))::(fromPoints t)
+    (x, y)::[] -> [scatter_makeCircle (x, y)]
+    (x, y)::t  -> (scatter_makeCircle (x, y))::(scatter_fromPoints t)
 
-makeCircle (x, y) =
-  circle dotSize
+scatter_makeCircle (x, y) =
+  circle scatter_dotSize
     |> filled black
     |> move (x, y)
 
-xAxis : Form
-xAxis =
-  traced (dashed black) xAxisPath
+scatter_xAxis : Form
+scatter_xAxis =
+  traced (dashed black) scatter_xAxisPath
 
-xAxisPath : Path
-xAxisPath =
-  path [(0, -boxHeight), (0, boxHeight)]
+scatter_xAxisPath : Path
+scatter_xAxisPath =
+  path [(0, -scatter_boxHeight), (0, scatter_boxHeight)]
 
 
-yAxis : Form
-yAxis =
-  traced (dashed black) yAxisPath
+scatter_yAxis : Form
+scatter_yAxis =
+  traced (dashed black) scatter_yAxisPath
 
-yAxisPath : Path
-yAxisPath =
-  path [(-boxWidth, 0), (boxWidth, 0)]
+scatter_yAxisPath : Path
+scatter_yAxisPath =
+  path [(-scatter_boxWidth, 0), (scatter_boxWidth, 0)]

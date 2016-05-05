@@ -4,60 +4,60 @@ import Graphics.Collage exposing (..)
 import Debug
 import List exposing (..)
 
-boxHeight = 400
-boxWidth  = 500
-dotSize   = 2
+line_boxHeight = 400
+line_boxWidth  = 500
+line_dotSize   = 2
 
 main : Element
-main = collage boxWidth boxHeight forms
+main = collage line_boxWidth line_boxHeight line_forms
 
-pointList = [
+line_pointList = [
   ( -50.0,    10.0),
   ( 5.0,      15.0),
   ( 15.0,    -5.0),
   ( 35.0,     50.0),
   ( 50.0,    -20.0) ]
 
-forms = append (xAxis :: yAxis :: circles pointList) (points pointList)
+line_forms = append (line_xAxis :: line_yAxis :: line_circles line_pointList) (line_points line_pointList)
 
-points : List (Float, Float) -> List Form
-points list =
+line_points : List (Float, Float) -> List Form
+line_points list =
   case list of
     []                   -> []
     (x, y)::[]           -> []
-    (x, y)::(x1, y1)::t  -> getLine (linePath (x, y) (x1, y1)) :: points ((x1,y1)::t)
+    (x, y)::(x1, y1)::t  -> line_getLine (line_getLine (x, y) (x1, y1)) :: line_points ((x1,y1)::t)
 
-circles : List (Float, Float) -> List Form
-circles list =
+line_circles : List (Float, Float) -> List Form
+line_circles list =
   case list of
     []         -> []
-    (x, y)::[] -> [makeCircle (x, y)]
-    (x, y)::t  -> (makeCircle (x, y))::(circles t)
+    (x, y)::[] -> [line_makeCircle (x, y)]
+    (x, y)::t  -> (line_makeCircle (x, y))::(line_circles t)
 
-makeCircle (x, y) =
-  circle dotSize
+line_makeCircle (x, y) =
+  circle line_dotSize
     |> filled black
     |> move (x, y)
 
-xAxis : Form
-xAxis =
-  traced (dashed black) xAxisPath
+line_xAxis : Form
+line_xAxis =
+  traced (dashed black) line_xAxisPath
 
-xAxisPath : Path
-xAxisPath =
-  path [(0, -boxHeight), (0, boxHeight)]
+line_xAxisPath : Path
+line_xAxisPath =
+  path [(0, -line_boxHeight), (0, line_boxHeight)]
 
-yAxis : Form
-yAxis =
-  traced (dashed black) yAxisPath
+line_yAxis : Form
+line_yAxis =
+  traced (dashed black) line_yAxisPath
 
-yAxisPath : Path
-yAxisPath =
-  path [(-boxWidth, 0), (boxWidth, 0)]
+line_yAxisPath : Path
+line_yAxisPath =
+  path [(-line_boxWidth, 0), (line_boxWidth, 0)]
 
-linePath : (Float, Float) -> (Float, Float) -> Path
-linePath (x, y) (x1, y1) =
+line_linePath : (Float, Float) -> (Float, Float) -> Path
+line_linePath (x, y) (x1, y1) =
   path [(x, y), (x1, y1)]
 
-getLine : Path -> Form
-getLine myPath = traced (solid black) myPath
+line_getLine : Path -> Form
+line_getLine myPath = traced (solid black) myPath

@@ -3,9 +3,9 @@ import Graphics.Element exposing (..)
 import Graphics.Collage exposing (..)
 import Debug
 
-boxHeight = 400
-boxWidth  = 500
-rectWidth = 10
+bargraph_boxHeight = 400
+bargraph_boxWidth  = 500
+bargraph_rectWidth = 10
 
 main : Element
 main =
@@ -19,21 +19,21 @@ main =
       myRect 100 1.0
     ]
 
-getHeight max scale =
+bargraph_getHeight max scale =
   max*scale
 
 -- Gets the offset given a scale
-getOffset scale containerHeight =
+bargraph_getOffset scale containerHeight =
   (containerHeight*2)*(1-scale)
 
 -- Defines a rectangle given:
 --  an offset from the left most point
 --  a scale from 1.0 to 0.0
-myRect offset scale =
-  rect rectWidth (getHeight boxHeight scale)
+bargraph_myRect offset scale =
+  rect bargraph_rectWidth (getHeight boxHeight scale)
     |> filled blue
     |> move(offset-boxWidth/2 + rectWidth,
-            -(getOffset scale 100))
+            -(bargraph_getOffset scale 100))
 
-getScale height maxHeight =
+bargraph_getScale height maxHeight =
   height/maxHeight
